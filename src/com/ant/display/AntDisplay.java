@@ -43,6 +43,7 @@ public class AntDisplay extends JPanel
         // TODO Auto-generated constructor stub
         setPreferredSize(new Dimension(AntWindow.WINDOW_WIDTH,
             AntWindow.WINDOW_HEIGHT));
+        setBackground(new Color(75, 75, 75));
         setFocusable(true);
         requestFocus();
 
@@ -73,15 +74,6 @@ public class AntDisplay extends JPanel
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D)g;
-
-        // Draw Grid
-// g2d.setColor(Color.GRAY);
-// for (int row = 0; row < AntWindow.WINDOW_HEIGHT; row++) {
-// for (int col = 0; col < AntWindow.WINDOW_WIDTH; col++) {
-// g2d.drawRect(row * TILE_SIZE, col * TILE_SIZE, TILE_SIZE,
-// TILE_SIZE);
-// }
-// }
 
         // Draw Recently changed Tile
         if (loopStarted) {

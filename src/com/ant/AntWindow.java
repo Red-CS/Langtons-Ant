@@ -6,7 +6,7 @@ import com.ant.display.AntDisplay;
 /**
  * 
  * @author Red Williams <red.devcs@gmail.com>
- * @since Jun 26, 2021
+ * @since Jun 27, 2021
  */
 public class AntWindow extends JFrame {
 
@@ -20,6 +20,7 @@ public class AntWindow extends JFrame {
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         setTitle("Langton's Ant");
         setContentPane(new AntDisplay());
+        setResizable(false);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
