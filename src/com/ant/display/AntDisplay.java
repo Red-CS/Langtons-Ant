@@ -1,6 +1,5 @@
 package com.ant.display;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -78,7 +77,7 @@ public class AntDisplay extends JPanel
         setLayout(null);
         setPreferredSize(new Dimension(AntWindow.WINDOW_WIDTH,
             AntWindow.WINDOW_HEIGHT));
-        setBackground(new Color(245, 245, 245));
+        setBackground(Styles.bg);
         setFocusable(true);
         requestFocus();
 
@@ -173,14 +172,14 @@ public class AntDisplay extends JPanel
         for (int row = 0; row < AntWindow.WINDOW_HEIGHT; row++) {
             for (int col = 0; col < AntWindow.WINDOW_WIDTH; col++) {
                 if (grid[col][row].getState()) {
-                    g2d.setColor(Color.BLACK);
+                    g2d.setColor(Styles.tile);
                     g2d.fillRect(col, row, TILE_SIZE, TILE_SIZE);
                 }
             }
         }
 
         // Draw Ant
-        g2d.setColor(Color.RED);
+        g2d.setColor(Styles.ant);
         g2d.fillRect(antXIndex, antYIndex, TILE_SIZE, TILE_SIZE);
 
         // Draw Steps Counter
@@ -215,12 +214,15 @@ public class AntDisplay extends JPanel
                     case UP:
                         antYIndex -= TILE_SIZE;
                         break;
+
                     case DOWN:
                         antYIndex += TILE_SIZE;
                         break;
+
                     case LEFT:
                         antXIndex -= TILE_SIZE;
                         break;
+
                     case RIGHT:
                         antXIndex += TILE_SIZE;
                         break;
@@ -344,21 +346,15 @@ public class AntDisplay extends JPanel
 
     }
 
-    /*
-     * Unused Input Listener Methods
-     */
+    // Unused Input Listener Methods
 
 
     @Override
-    public void mousePressed(MouseEvent e) {
-
-    }
+    public void mousePressed(MouseEvent e) {}
 
 
     @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
+    public void mouseReleased(MouseEvent e) {}
 
 
     @Override
