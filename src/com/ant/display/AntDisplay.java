@@ -30,17 +30,15 @@ public class AntDisplay extends JPanel
     private Tile[][] grid;
     private int antXIndex;
     private int antYIndex;
-    private int mouseX;
-    private int mouseY;
     private Ant ant;
-    private boolean loopStarted;
     private int steps;
+    private boolean isRunning;
+    private Timer antTimer;
 
     /**
      * AntDisplay Class Constructor
      */
     public AntDisplay() {
-        // TODO Auto-generated constructor stub
         setPreferredSize(new Dimension(AntWindow.WINDOW_WIDTH,
             AntWindow.WINDOW_HEIGHT));
         setBackground(new Color(75, 75, 75));
@@ -55,17 +53,15 @@ public class AntDisplay extends JPanel
             }
         }
 
-        ant = new Ant(Direction.UP);
+        ant = new Ant(Direction.DOWN);
 
         antXIndex = AntWindow.WINDOW_WIDTH / 2;
         antYIndex = AntWindow.WINDOW_HEIGHT / 2;
 
+        isRunning = false;
         steps = 0;
 
-        loopStarted = false;
-        System.out.println(antXIndex + " " + antYIndex);
-
-        addMouseMotionListener(this);
+        addMouseListener(this);
         addKeyListener(this);
     }
 
@@ -75,15 +71,12 @@ public class AntDisplay extends JPanel
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D)g;
 
-        // Draw Recently changed Tile
-        if (loopStarted) {
-            for (int row = 0; row < AntWindow.WINDOW_HEIGHT; row++) {
-                for (int col = 0; col < AntWindow.WINDOW_WIDTH; col++) {
-                    if (grid[row][col].getState()) {
-                        g2d.setColor(Color.BLACK);
-                        g2d.fillRect(row, col, TILE_SIZE, TILE_SIZE);
-
-                    }
+        // Draw Black Tiles
+        for (int row = 0; row < AntWindow.WINDOW_HEIGHT; row++) {
+            for (int col = 0; col < AntWindow.WINDOW_WIDTH; col++) {
+                if (grid[row][col].getState()) {
+                    g2d.setColor(Color.BLACK);
+                    g2d.fillRect(row, col, TILE_SIZE, TILE_SIZE);
                 }
             }
         }
@@ -106,9 +99,7 @@ public class AntDisplay extends JPanel
             return;
         }
 
-        loopStarted = true;
-
-        Timer antTimer = new Timer(5, new ActionListener() {
+        antTimer = new Timer(5, new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -139,7 +130,6 @@ public class AntDisplay extends JPanel
                     case RIGHT:
                         antXIndex += TILE_SIZE;
                         break;
-                    default:
 
                 }
 
@@ -168,13 +158,22 @@ public class AntDisplay extends JPanel
     }
 
 
+    private void toggleTile(int xIndex, int yIndex) {
+        grid[xIndex][yIndex].toggleState();
+        repaint();
+    }
+
+
     /**
      * @param e
      */
     @Override
     public void mouseClicked(MouseEvent e) {
-        // TODO Auto-generated method stub
-
+        if (!isRunning) {
+            int pointX = e.getX() - (e.getX() % TILE_SIZE);
+            int pointY = e.getY() - (e.getY() % TILE_SIZE);
+            toggleTile(pointX, pointY);
+        }
     }
 
 
@@ -233,9 +232,6 @@ public class AntDisplay extends JPanel
      */
     @Override
     public void mouseMoved(MouseEvent e) {
-// mouseX = e.getX();
-// mouseY = e.getY();
-// System.out.println(mouseX + " " + mouseY);
 
     }
 
@@ -265,8 +261,20 @@ public class AntDisplay extends JPanel
      */
     @Override
     public void keyReleased(KeyEvent e) {
-        // Run loop
-        run();
+        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+
+            // Pause
+            if (isRunning) {
+                antTimer.stop();
+                isRunning = false;
+            }
+
+            // Run loop
+            else {
+                isRunning = true;
+                run();
+            }
+        }
 
     }
 
