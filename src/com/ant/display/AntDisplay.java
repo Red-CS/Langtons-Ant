@@ -41,7 +41,7 @@ public class AntDisplay extends JPanel
     public AntDisplay() {
         setPreferredSize(new Dimension(AntWindow.WINDOW_WIDTH,
             AntWindow.WINDOW_HEIGHT));
-        setBackground(new Color(75, 75, 75));
+        setBackground(new Color(225, 225, 225));
         setFocusable(true);
         requestFocus();
 
@@ -62,6 +62,7 @@ public class AntDisplay extends JPanel
         steps = 0;
 
         addMouseListener(this);
+        addMouseMotionListener(this);
         addKeyListener(this);
     }
 
@@ -94,10 +95,6 @@ public class AntDisplay extends JPanel
 
 
     public void run() {
-        if (ant == null) {
-            System.out.println("Cannot run, no Ant is present");
-            return;
-        }
 
         antTimer = new Timer(5, new ActionListener() {
 
@@ -222,8 +219,11 @@ public class AntDisplay extends JPanel
      */
     @Override
     public void mouseDragged(MouseEvent e) {
-        // TODO Auto-generated method stub
-
+        if (!isRunning) {
+            int pointX = e.getX() - (e.getX() % TILE_SIZE);
+            int pointY = e.getY() - (e.getY() % TILE_SIZE);
+            toggleTile(pointX, pointY);
+        }
     }
 
 
