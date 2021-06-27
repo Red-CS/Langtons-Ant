@@ -11,7 +11,7 @@ Following these rules, the Ant should move across the screen in a seemingly rand
 
 <img src="img/ant1.gif" alt="Langton's Ant Demonstration"/>
 
-What makes this so interesting is that, no matter the initial configuration of the board, the Ant will eventually reach a pattern called *The Highway*. This program simulates that effect.
+What makes this so interesting is that, no matter the initial configuration of the board, the Ant will eventually reach a pattern called *The Highway*. Out of chaos, comes order. This program simulates that effect.
 
 <img src="img/ant2.gif" alt="Langton's Ant making the Highway"/>
 
