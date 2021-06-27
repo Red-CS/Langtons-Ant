@@ -136,7 +136,7 @@ public class AntDisplay extends JPanel
              */
             @Override
             public void stateChanged(ChangeEvent e) {
-                JSlider source = (JSlider)e.getSource();
+                JSlider source = (JSlider) e.getSource();
 
                 // Only run after the user drops the slider
                 if (!source.getValueIsAdjusting()) {
@@ -167,7 +167,7 @@ public class AntDisplay extends JPanel
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        Graphics2D g2d = (Graphics2D)g;
+        Graphics2D g2d = (Graphics2D) g;
 
         // Draw Tiles
         for (int row = 0; row < AntWindow.WINDOW_HEIGHT; row++) {
@@ -349,64 +349,35 @@ public class AntDisplay extends JPanel
      */
 
 
-    /**
-     * @param e
-     */
     @Override
     public void mousePressed(MouseEvent e) {
 
     }
 
 
-    /**
-     * @param e
-     */
     @Override
     public void mouseReleased(MouseEvent e) {
 
     }
 
 
-    /**
-     * @param e
-     */
     @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
+    public void mouseEntered(MouseEvent e) {}
 
 
-    /**
-     * @param e
-     */
     @Override
-    public void mouseExited(MouseEvent e) {
-
-    }
+    public void mouseExited(MouseEvent e) {}
 
 
-    /**
-     * @param e
-     */
     @Override
-    public void mouseMoved(MouseEvent e) {
-
-    }
+    public void mouseMoved(MouseEvent e) {}
 
 
-    /**
-     * @param e
-     */
     @Override
-    public void keyTyped(KeyEvent e) {
-    }
+    public void keyTyped(KeyEvent e) {}
 
 
-    /**
-     * @param e
-     */
     @Override
-    public void keyPressed(KeyEvent e) {
-    }
+    public void keyPressed(KeyEvent e) {}
 
 }

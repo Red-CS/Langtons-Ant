@@ -64,7 +64,6 @@ public enum Direction {
      */
     public abstract Direction getLeftDirection();
 
-
     /**
      * Gets the Right Direction of the Enum
      * @return the Right Direction of the Enum
