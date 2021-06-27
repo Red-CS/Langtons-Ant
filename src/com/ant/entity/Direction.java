@@ -1,7 +1,7 @@
 package com.ant.entity;
 
 /**
- * 
+ * Direction Enumerated Type
  * @author Red Williams <red.devcs@gmail.com>
  * @since Jun 27, 2021
  */
@@ -15,7 +15,6 @@ public enum Direction {
 
         @Override
         public Direction getRightDirection() {
-            // TODO Auto-generated method stub
             return UP;
         }
     },
@@ -29,7 +28,6 @@ public enum Direction {
 
         @Override
         public Direction getRightDirection() {
-            // TODO Auto-generated method stub
             return DOWN;
         }
     },
@@ -43,7 +41,6 @@ public enum Direction {
 
         @Override
         public Direction getRightDirection() {
-            // TODO Auto-generated method stub
             return RIGHT;
         }
     },
@@ -57,13 +54,20 @@ public enum Direction {
 
         @Override
         public Direction getRightDirection() {
-            // TODO Auto-generated method stub
             return LEFT;
         }
     };
 
+    /**
+     * Gets the Left Direction of the Enum
+     * @return the Left Direction of the Enum
+     */
     public abstract Direction getLeftDirection();
 
 
+    /**
+     * Gets the Right Direction of the Enum
+     * @return the Right Direction of the Enum
+     */
     public abstract Direction getRightDirection();
 }
