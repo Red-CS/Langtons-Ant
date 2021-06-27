@@ -84,11 +84,8 @@ public class AntDisplay extends JPanel
         // Create Grid of Tiles
         grid = new Tile[AntWindow.WINDOW_WIDTH][AntWindow.WINDOW_HEIGHT];
 
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[i].length; j++) {
-                grid[i][j] = new Tile();
-            }
-        }
+        // Initialize the grid
+        initGrid();
 
         // Initialize Ant
         ant = new Ant(Direction.DOWN);
@@ -256,6 +253,18 @@ public class AntDisplay extends JPanel
 
 
     /**
+     * Initializes the Tile grid
+     */
+    private void initGrid() {
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[i].length; j++) {
+                grid[i][j] = new Tile();
+            }
+        }
+    }
+
+
+    /**
      * Toggles the Tile at the specified position, then repaints the screen
      * @param xIndex X Position of Tile
      * @param yIndex Y Position of Tile
@@ -329,6 +338,8 @@ public class AntDisplay extends JPanel
      */
     @Override
     public void keyReleased(KeyEvent e) {
+
+        // Pause/Unpause
         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 
             // Pause
@@ -342,6 +353,32 @@ public class AntDisplay extends JPanel
                 isRunning = true;
                 run();
             }
+        }
+
+        // Reset
+        else if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+
+            // Stop the Timer
+            antTimer.stop();
+            isRunning = false;
+
+            // Reset Timer attributes
+            delaySlider.setValue(MIN_DELAY);
+            timerDelay = MIN_DELAY;
+
+            // Reinitialize Grid to hold all false Tiles
+            initGrid();
+
+            // Reset steps counter
+            steps = 0;
+
+            // Repaint
+            repaint();
+        }
+
+        // Exit
+        else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            System.exit(0);
         }
 
     }
