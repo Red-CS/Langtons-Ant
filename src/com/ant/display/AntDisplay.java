@@ -11,8 +11,13 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.Hashtable;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
 import javax.swing.Timer;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import com.ant.AntWindow;
 import com.ant.entity.Ant;
 import com.ant.entity.Direction;
@@ -34,14 +39,19 @@ public class AntDisplay extends JPanel
     private int steps;
     private boolean isRunning;
     private Timer antTimer;
+    private int timerDelay;
+
+    private final int MIN_DELAY = 5;
+    private final int MAX_DELAY = 1000;
 
     /**
      * AntDisplay Class Constructor
      */
     public AntDisplay() {
+        setLayout(null);
         setPreferredSize(new Dimension(AntWindow.WINDOW_WIDTH,
             AntWindow.WINDOW_HEIGHT));
-        setBackground(new Color(225, 225, 225));
+        setBackground(new Color(245, 245, 245));
         setFocusable(true);
         requestFocus();
 
@@ -60,10 +70,49 @@ public class AntDisplay extends JPanel
 
         isRunning = false;
         steps = 0;
+        timerDelay = MIN_DELAY;
 
         addMouseListener(this);
         addMouseMotionListener(this);
         addKeyListener(this);
+
+        JSlider jslider = new JSlider(MIN_DELAY, MAX_DELAY, timerDelay);
+        jslider.setMajorTickSpacing(100);
+        jslider.setMinorTickSpacing(50);
+        jslider.setPaintTicks(true);
+        jslider.setBounds(30, 60, 175, 45);
+        jslider.setFocusable(false);
+        jslider.setOpaque(false);
+
+        Hashtable<Integer, JLabel> labelTable =
+            new Hashtable<Integer, JLabel>();
+        labelTable.put(5, new JLabel("5ms"));
+        labelTable.put(1000, new JLabel("1000ms"));
+        jslider.setLabelTable(labelTable);
+        jslider.addChangeListener(new ChangeListener() {
+
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                JSlider source = (JSlider)e.getSource();
+                if (!source.getValueIsAdjusting()) {
+                    int newDelay = source.getValue();
+                    System.out.println(newDelay);
+                    timerDelay = newDelay;
+                    if (antTimer != null) {
+                        antTimer.setInitialDelay(timerDelay);
+                        antTimer.setDelay(timerDelay);
+                        if (isRunning) {
+                            antTimer.restart();
+                        }
+                    }
+                }
+            }
+
+        });
+
+        jslider.setPaintLabels(true);
+        add(jslider);
+
     }
 
 
@@ -96,7 +145,7 @@ public class AntDisplay extends JPanel
 
     public void run() {
 
-        antTimer = new Timer(5, new ActionListener() {
+        antTimer = new Timer(timerDelay, new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -161,6 +210,12 @@ public class AntDisplay extends JPanel
     }
 
 
+    private boolean isInBounds(int xPos, int yPos) {
+        return (xPos >= 0 && xPos < AntWindow.WINDOW_WIDTH) && (yPos >= 0
+            && yPos < AntWindow.WINDOW_HEIGHT);
+    }
+
+
     /**
      * @param e
      */
@@ -222,7 +277,9 @@ public class AntDisplay extends JPanel
         if (!isRunning) {
             int pointX = e.getX() - (e.getX() % TILE_SIZE);
             int pointY = e.getY() - (e.getY() % TILE_SIZE);
-            toggleTile(pointX, pointY);
+            if (isInBounds(pointX, pointY)) {
+                toggleTile(pointX, pointY);
+            }
         }
     }
 
