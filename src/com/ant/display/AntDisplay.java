@@ -333,7 +333,8 @@ public class AntDisplay extends JPanel
     /**
      * Handles a key being pressed, simulating user controls:
      * Enter = Pause/Unpause Simulation
-     * Escape = Reset and Restart
+     * Backspace = Reset and Restart
+     * Escape = Exit
      * @param e KeyEvent
      */
     @Override
